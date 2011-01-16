@@ -140,7 +140,7 @@
       
       $('body').addSwipeEvents().
         bind('swiperight', function(evt, touch) {
-          window.location.reload();
+          //window.location.reload();
       });
       
 
@@ -152,15 +152,15 @@
       
       $('body').addSwipeEvents().
         bind('swipeleft', function(evt, touch) {
-        if($('body').hasClass('bg_grid'))
-        {
-          $('body').removeClass('bg_grid');
-        }
-        else
-        {
-          $('body').addClass('bg_grid');
-        }
-        menuSet();
+        // if($('body').hasClass('bg_grid'))
+        //         {
+        //           $('body').removeClass('bg_grid');
+        //         }
+        //         else
+        //         {
+        //           $('body').addClass('bg_grid');
+        //         }
+        //         menuSet();
       });
       
 
@@ -265,6 +265,30 @@
 			  clearTimeout($rad.data("timeout"));
 			  $rad.data("timeout", setTimeout(function() {$rad.radmenu('hide');}, 500));
 		  }
+      }).bind("touch", function (event) {
+	    // highlight selections ... TODO show a button instead
+        if (document.getSelection().toString() != "") {
+			// http://stackoverflow.com/questions/2756931/highlight-the-text-of-the-dom-range-element
+			var sel = window.getSelection();
+			var selectedRange = sel.getRangeAt(0);
+
+			// Select desired range
+			//sel.removeAllRanges();
+			//sel.addRange(range);
+
+			document.designMode = "on";
+
+			// Try HiliteColor first since Firefox applies BackColor to the whole block
+			if ( !document.execCommand("HiliteColor", false, "lightyellow") ) {
+			    document.execCommand("BackColor", false, "lightyellow");
+			}
+
+			document.designMode = "off";
+
+			// Restore previously selected range
+			// sel.removeAllRanges();
+			// sel.addRange(selectedRange);
+		}
       });
 
       // SHAKE! ... for fun ;) 
@@ -297,7 +321,7 @@
 	        y2 = y1;
 	        z2 = z1;
 	    }, 150);
-	}
+	  }
 
       // --------------------------------------
       // Doubleclick to show menu on desktop
